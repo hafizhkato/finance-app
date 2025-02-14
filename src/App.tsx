@@ -10,18 +10,20 @@ const client = generateClient<Schema>();
 function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
   const [file, setFile] = useState<File | null>(null);
-
   const {user, signOut } = useAuthenticator();
 
+  //this will trigger when user selects a file using input type="file" element
+  //Specifies that event is a change event from an input element in React.
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(event.target.files?.[0] || null);
+    setFile(event.target.files?.[0] || null);//safely to get the first file ie:files[0]
   };
 
+  //handle when user click upload
   const handleClick = () => {
     if (!file) {
       return;
     }
-    uploadData({
+    uploadData({//upload function
       path: `picture-submissions/${file.name}`,
       data: file,
     });
